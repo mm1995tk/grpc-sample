@@ -4,6 +4,7 @@ use sample_b::sample_api_b_server::{SampleApiB, SampleApiBServer};
 use sample_b::{RequestB, ResponseB};
 use tonic::{transport::Server, Request, Response, Status};
 use tower::ServiceBuilder;
+use anyhow;
 
 pub mod sample_a {
     tonic::include_proto!("sample_a");
@@ -43,7 +44,7 @@ impl SampleApiB for SampleApiBImpl {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> anyhow::Result<(), anyhow::Error> {
     let addr = "[::1]:50051".parse()?;
     let sample_a = SampleApiAImpl::default();
     let sample_b = SampleApiBImpl::default();
